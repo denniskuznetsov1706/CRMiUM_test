@@ -25,6 +25,8 @@ function calculateRateDifference() {
 window.onload = function () {
     let nbuRate = document.getElementById('nbuRate')
     let dealRate = document.getElementById('dealRate')
+    let currentRecordId = document.getElementById('currentRecordId')
+
 
     fetchUSDExchangeRate().then(rate => {
 
@@ -38,10 +40,11 @@ window.onload = function () {
             Entity: data.Entity,
             RecordID: data.EntityId,
         }).then(function (response) {
-            var currentRecordId = response.data[0].id;
-            console.log("Current Record ID: ", currentRecordId);
+            let recordId = response.data[0].id;
+            currentRecordId.innerHTML = recordId;
+            console.log("Current Record ID: ", recordId);
             ZOHO.CRM.API.getRecord({
-                Entity: "Deals", approved: "both", RecordID: currentRecordId
+                Entity: "Deals", approved: "both", RecordID: recordId
             })
                 .then(function (data) {
                     console.log(data)
@@ -49,7 +52,6 @@ window.onload = function () {
                     calculateRateDifference()
                     checkValues()
                 })
-            // You can now use the currentRecordId in your application
         });
     });
     ZOHO.embeddedApp.init();

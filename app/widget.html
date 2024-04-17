@@ -11,9 +11,11 @@
     />
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://live.zwidgets.com/js-sdk/1.2/ZohoEmbededAppSDK.min.js"></script>
+
     <script src="service/mainLogic.js"></script>
     <script src="service/helpers/exchangeRateAPI.js"></script>
-    <script src="https://live.zwidgets.com/js-sdk/1.2/ZohoEmbededAppSDK.min.js"></script>
+    <script src="service/helpers/updateRecord.js"></script>
   </head>
   <body>
     <div class="container mt-5">
@@ -52,7 +54,13 @@
           </div>
         </div>
       </div>
-      <button id="updateButton" class="btn btn-primary" style="display: none">
+      <div id="currentRecordId" style="display: none"></div>
+      <button
+        onclick="updateZohoRecord()"
+        id="updateButton"
+        class="btn btn-primary"
+        style="display: none"
+      >
         Update Deal Rate
       </button>
     </div>
