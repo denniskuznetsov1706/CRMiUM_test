@@ -21,6 +21,8 @@ window.onload = function () {
     fetchUSDExchangeRate().then(rate => {
         nbuRate.value = rate.toFixed(2)
         console.log(`The current USD exchange rate is: ${rate}`);
+    }).catch(error => {
+        console.error('Error fetching USD exchange rate:', error);
     });
 
     ZOHO.embeddedApp.on("PageLoad", function (data) {
@@ -38,7 +40,11 @@ window.onload = function () {
                     console.log(data)
                     dealRate.value = data.data[0].Currency_rate
                     checkValues()
-                })
+                }).catch(error => {
+                    console.error('Error fetching deal record:', error);
+                });
+        }).catch(error => {
+            console.error('Error fetching record:', error);
         });
     });
 
@@ -54,9 +60,9 @@ window.onload = function () {
                     dealRate.value = data.data[0].Currency_rate
                     checkValues()
                 }
-            })
+            }).catch(error => {
+                console.error('Error fetching deal record:', error);
+            });
 
     }, 3000)
-
-
 }
