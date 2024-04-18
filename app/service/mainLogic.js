@@ -14,23 +14,12 @@ function checkValues() {
         }
     }
 }
-function calculateRateDifference() {
-    console.log('run this')
-    document.querySelectorAll("#nbuRate, #dealRate").forEach(input => {
-        input.addEventListener("input", checkValues);
-    });
-}
-
 
 window.onload = function () {
     let nbuRate = document.getElementById('nbuRate')
     let dealRate = document.getElementById('dealRate')
     let currentRecordId = document.getElementById('currentRecordId')
-
-
     fetchUSDExchangeRate().then(rate => {
-
-
         nbuRate.value = rate.toFixed(2)
         console.log(`The current USD exchange rate is: ${rate}`);
     });
@@ -49,13 +38,26 @@ window.onload = function () {
                 .then(function (data) {
                     console.log(data)
                     dealRate.value = data.data[0].Currency_rate
-                    calculateRateDifference()
                     checkValues()
                 })
         });
     });
+
+
     ZOHO.embeddedApp.init();
 
+    setInterval(() => {
+        ZOHO.CRM.API.getRecord({
+            Entity: "Deals", approved: "both", RecordID: currentRecordId.innerHTML
+        })
+            .then(function (data) {
+                if (data.data[0].Currency_rate && data.data[0].Currency_rate != dealRate.value) {
+                    dealRate.value = data.data[0].Currency_rate
+                    checkValues()
+                }
+            })
+
+    }, 3000)
 
 
 }
