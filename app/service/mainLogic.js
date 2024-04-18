@@ -1,6 +1,5 @@
 
 function checkValues() {
-    console.log('check values')
     let nbuRate = parseFloat(document.querySelector("#nbuRate").value);
     let dealRate = parseFloat(document.querySelector("#dealRate").value);
     if (!isNaN(nbuRate) && !isNaN(dealRate)) {

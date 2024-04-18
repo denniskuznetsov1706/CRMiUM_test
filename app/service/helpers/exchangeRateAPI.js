@@ -3,6 +3,7 @@ function fetchUSDExchangeRate() {
     return fetch('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json')
         .then(response => response.json())
         .then(data => {
+            console.log('The data from NBU ->', data)
             const usdRate = data.find(currency => currency.cc === 'USD');
             if (usdRate) {
                 return usdRate.rate;
